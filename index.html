@@ -1,0 +1,53 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What is Docker (in Docker)^n</title>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <h1>What is Docker (in Docker)^n</h1>
+  <p>This website will explain to you what is Docker (in Docker)^n.</p>
+  <p>For example, if you are confused what is Docker in Docker, just type 2 below. Similarly, if you want to know what is Docker in Docker in Docker, type 3 instead.</p>
+  <div>Number of layers: <input type="number" id="input" value="1" min="1" step="1"></div>
+  <h2 id="title">Explanation for Docker</h2>
+  <p id="output">Docker is just Docker.</p>
+  <script>
+    function dockerIn(layers) {
+      return 'Docker in '.repeat(layers - 1) + 'Docker';
+    }
+    function explain(layers) {
+      if (layers === 1) {
+        return '';
+      } else {
+        return ` (${docker(layers)})`;
+      }
+    }
+    function docker(layers) {
+        if (layers === 1) {
+            return 'Docker is just Docker.'
+        } else {
+            let a = dockerIn(layers) + ` is essentially running Docker inside of ${dockerIn(layers - 1)}${explain(layers - 1)}`;
+            for (let out = 2; out < layers; out++) {
+                a += `, which is also just running ${dockerIn(out)}${explain(out)} inside of ${dockerIn(layers - out)}${explain(layers - out)}`;
+            }
+            return a + '.';
+        }
+    }
+    document.getElementById('input').addEventListener('input', event => {
+      const value = +event.target.value;
+      if (Number.isNaN(value) || (value % 1 !== 0) || (value <= 0) || (!Number.isFinite(value))) {
+        document.getElementById('output').innerText = 'Invalid input.';
+        return;
+      }
+      document.getElementById('title').innerText = `Explanation for ${dockerIn(value)}`;
+      document.getElementById('output').innerText = docker(value);
+    });
+  </script>
+</body>
+</html>
